@@ -1,0 +1,60 @@
+//
+//  ViewController.m
+//  keyboard iOS
+//
+//  Created by qiang on 15-4-27.
+//  Copyright (c) 2015年 china. All rights reserved.
+//
+
+#import "ViewController.h"
+
+@interface ViewController ()<UITableViewDelegate,UITableViewDataSource>
+{
+    UITableView *mytable;
+    NSMutableArray *array;
+}
+
+@end
+
+@implementation ViewController
+
+- (void)viewDidLoad {
+    array =[[NSMutableArray alloc] initWithObjects:@"sdfsdf",@"sdfsdf",@"sdfsdf",@"sdfsdf",@"sdfsdf",@"sdfsdf",@"sdfsdf", nil];
+    [super viewDidLoad];
+    mytable = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    mytable.delegate = self;
+    mytable.dataSource = self;
+    [self.view addSubview:mytable];
+}
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return 1;
+}
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return array.count;
+}
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    static NSString *MYID = @"MYID";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MYID];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:MYID];
+    }
+    cell.textLabel.text = [NSString stringWithFormat:@"-----%ld",indexPath.row];
+    return cell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    [array removeObjectAtIndex:indexPath.row];
+    [tableView deleteRowsAtIndexPaths:[[NSArray alloc] initWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationTop];
+}
+
+
+
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+@end
